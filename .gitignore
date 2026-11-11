@@ -1,0 +1,5 @@
+build/
+narrow/build/
+__pycache__/
+.claude/
+.DS_Store

@@ -1,0 +1,4 @@
+The narrow build: the game as it was before the Model B got full-width windows
+(two 40-character windows, 16K of sideways RAM).  Frozen; ../build.sh builds it
+and puts it on the disc as LOAD16, TRON16, BANK16 and EXPL16, and LOADER runs it
+on a Model B with only one bank of sideways RAM.
