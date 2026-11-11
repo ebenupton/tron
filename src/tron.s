@@ -1521,19 +1521,30 @@ grow_cell:
         sta ovt
         lda hrb,y
         tay
-        lda headcol
 @ov:    cpy ovt
         bcc @own
         cpy #16
         bcs @own
+        tya
+        and #1
+        tax
+        lda headcol,x
         sta (da),y
         dey
         bpl @ov
-@own:   ldy tmp+3
-        lda headcol,x
+@own:   ldx gb
+        ldy tmp+3
 @hr:    cpy tmp+1
         bcc @hx
-        sta (da),y
+        lda #$0F                    ; cyan's head cyan
+        cpx #0
+        bne :+
+        tya                         ; orange's orange: the blades' dither
+        and #1
+        tax
+        lda headcol,x
+        ldx #0
+:       sta (da),y
         dey
         bpl @hr
 @hx:    lda tmp
@@ -1548,7 +1559,8 @@ grow_cell:
         sta hbxh,x
         jmp dirty_cell              ; cx = bx, tmp+2 = ty
 
-headcol: .byte $FF, $0F             ; orange's head yellow, cyan's cyan
+headcol: .byte $FA, $F5             ; orange: yellow on even pixels of even lines,
+                                    ; magenta on odd (as the blades: x + y)
 
 ; the head's lines in tile row tmp+2 are tmp+1..tmp+3: into its world span (bike X)
 head_span:
