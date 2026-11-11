@@ -242,7 +242,7 @@ cmd_exm: .byte "LOAD EXPL16 3000", 13
 cmd_exb: .byte "LOAD EXPL16 ", >EXPLB / 16 + '0', (>EXPLB & 15) + '0', "00", 13
 cmd_tr: .byte "LOAD TRON16 4400", 13
 msg_noram:
-        .byte 22, 7, "LIGHT BIKES needs a Master 128, or a", 13, 10
-        .byte "Model B with 16K of sideways RAM.", 13, 10, 0
+        .byte 22, 7, "TRON Lightcycle Run needs a Master 128,", 13, 10
+        .byte "or a Model B with 16K of sideways RAM.", 13, 10, 0
 fontbuf: .res 9
 hand:   .res 3

@@ -22,7 +22,7 @@ os.makedirs(OUT, exist_ok=True)
 
 MAP = 0x8000                 # bank 4 layout (the one sideways RAM bank a Model B has)
 TILES = 0xA420               # (16-aligned: a tile's halves are TLO | 0 and | 8)
-FONTB = 0x8F00               # the MOS's font, characters 32..95: in the code bank, after EXPL
+FONTB = 0x8F00               # the MOS's font, characters 32..127: in the code bank, after EXPL
 DYNA = 0xB390                # the dynamic tiles (the heads)
 CODEA = 0xB400               # bank 4's code (tron.cfg: CODEA, $200) and tables (TABA, $BF50)
 TRANS = 0xB600               # 6 pages: slot*2 + (colour-1)

@@ -1,5 +1,5 @@
 ; ============================================================================
-; LIGHT BIKES -- two players, split screen, isometric, for the BBC Master 128
+; TRON LIGHTCYCLE RUN -- two players, split screen, isometric, for the BBC Master 128
 ;
 ;   the top window follows the orange bike (Z left, X right), the bottom the
 ;   cyan one (< left, > right; or the cursor keys).  25 Hz.

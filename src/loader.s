@@ -7,7 +7,7 @@
 ;   2  MODE 1, the cursor off, the palette black
 ;   3  BANK4 (map, tiles, tables, the code that reads the map) into one bank
 ;   4  BANKB (the explosion's frames, room for the font, most of the code) to
-;      $3000, the MOS's font (32..95) into it, then into the other bank
+;      $3000, the MOS's font (32..127) into it, then into the other bank
 ;   5  TRON (the interrupt, the display, the drawing) to $3000, then (interrupts
 ;      off, from page 1) down to $0800, and run
 ;
@@ -109,7 +109,7 @@ loader: ldx #$FF
         inc lp+1
 :       inc lt
         lda lt
-        cmp #96
+        cmp #128
         bne @font
         lda hand+2
         jsr to_bank

@@ -1,6 +1,6 @@
-# Light Bikes
+# TRON Lightcycle Run
 
-A two-player, split-screen, isometric light-bike game for the BBC Master 128, and
+A two-player, split-screen, isometric light-cycle game for the BBC Master 128, and
 (from the same disc and binary) the Model B with 32K of sideways RAM.  Each player
 has their own smoothly scrolling 320x128 MODE 1 window (orange on top, cyan
 below).  The game runs at 25 Hz, and every graphic in play is a tile.  The bikes
@@ -230,7 +230,7 @@ disc: it finds the machine (OSBYTE 0) and the B's two banks (or runs LOAD16, the
 narrow build, if there is one or none), marks them empty in the MOS's ROM table,
 selects MODE 1 and blanks the palette, loads BANK4 into bank A, loads BANKB
 (explosion frames, room for the font, the code-bank code), puts the MOS's font
-into it and copies it to the code bank, and loads TRON at $3000.  Then, with
+(characters 32..127, for the title's lower case) into it and copies it to the code bank, and loads TRON at $3000.  Then, with
 interrupts off, a mover in page 1 copies TRON to $0800 and jumps to it.  The game
 never calls the MOS.
 
@@ -439,9 +439,11 @@ explosion's update takes at most ~111 lines on the Master.
 * The glint's second-row timing (`GT0`) is calibrated under jsbeeb.  Its window is
   about 40 µs wide, so a few µs of difference on real hardware won't matter.
 * The Model B needs 32K of sideways RAM for full width; with 16K it runs the narrow
-  build (`narrow/`, frozen: fixes to the main build don't reach it).
+  build (`narrow/`, frozen: fixes to the main build don't reach it).  Its font is
+  only characters 32..95 (there is no room for more in its one bank), so its title
+  is in capitals.
 * Main RAM for code is full (about 140 bytes free below $1880); the code bank has
-  about 6K free.
+  about 5.9K free.
 * On the Model B a chain step occasionally (about 1 in 800) lands a line late: when
   the glint's lower row starts right after a window's ring split, its User VIA
   interrupt delays the P2 step.  The late write is R9 = 7, which P2 already has; it

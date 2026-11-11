@@ -790,7 +790,7 @@ title_text:
         sty txp+1
         jmp text_list
 
-titles: .byte 24, 3, 2, "XXXXXXXXXXXXXXXXXXX", 0
+titles: .byte 24, 3, 2, "TRON LIGHTCYCLE RUN", 0
         .byte 64, 2, 1, "ORANGE:  Z LEFT  X RIGHT", 0
         .byte 88, 1, 1, "FIRST TO FIVE", 0
         .byte 152, 1, 1, "CYAN:  < LEFT  > RIGHT", 0
@@ -800,7 +800,7 @@ titles: .byte 24, 3, 2, "XXXXXXXXXXXXXXXXXXX", 0
 
 ; (the Model B's, for its 40-character windows)
 titles_b:
-        .byte 28, 3, 1, "XXXXXXXXXXXXXXXXXXX", 0
+        .byte 28, 3, 1, "TRON LIGHTCYCLE RUN", 0
         .byte 64, 2, 1, "ORANGE: Z X", 0
         .byte 88, 1, 1, "FIRST TO FIVE", 0
         .byte 152, 1, 1, "CYAN: < >", 0

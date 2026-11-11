@@ -1,5 +1,5 @@
 // tronb2: a headless driver for Tom Seddon's b2 emulator core (libbeeb), for
-// checking the lightbikes game on a Master 128 or a Model B with sideways RAM,
+// checking TRON Lightcycle Run on a Master 128 or a Model B with sideways RAM,
 // and recording it.  Derived from the b2drive harness of the Model B Elite port
 // (its sync and TV checks are kept unchanged).  It never opens a window.
 //
