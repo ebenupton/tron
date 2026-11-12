@@ -7,6 +7,23 @@ below).  The game runs at 25 Hz, and every graphic in play is a tile.  The bikes
 ride the floor's grid lines.  A Model B with only 16K of sideways RAM gets the
 earlier narrow build (160x128 windows, `narrow/`) from the same disc.
 
+<table>
+<tr>
+<td><img src="screenshots/title.png" width="400" alt="The title screen"></td>
+<td><img src="screenshots/countdown.png" width="400" alt="The countdown before a round"></td>
+</tr>
+<tr>
+<td><img src="screenshots/play1.png" width="400" alt="Mid-round: orange's window on top, cyan's below"></td>
+<td><img src="screenshots/play2.png" width="400" alt="Late in a round, the floor filling with trails"></td>
+</tr>
+<tr>
+<td><img src="screenshots/crash.png" width="400" alt="Orange crashes and explodes"></td>
+<td><img src="screenshots/score.png" width="400" alt="The score screen"></td>
+</tr>
+</table>
+
+<sub>Screenshots from jsbeeb (Master 128), taken during attract mode.</sub>
+
 ```
 sh build.sh            # -> tron.ssd (and build/tron.ssd)  (needs cc65 and Python 3 with Pillow; the tests also numpy and Node)
 ```
