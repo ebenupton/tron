@@ -7,8 +7,8 @@ test/frames.mjs runs the game under jsbeeb and streams to this script's stdin:
   * every field jsbeeb displays, decoded to physical colours.
 
 From the snapshots alone this model rebuilds the arena with the prototype's rules
-(tools/geom.py: the floor dots, each blade's lit columns, the per-pixel depth test,
-the magenta/yellow dither), the bikes' solid heads, the 6845 cursor over each
+(tools/geom.py: the floor dots, each blade's lit columns, the per-pixel depth test),
+the bikes' solid heads, the 6845 cursor over each
 window's own head, and the explosion's XOR squares.  It shares nothing with the
 6502's tiles, map or transition tables.  Each window of each field must equal the
 model's picture of one recent tick exactly; anything else is reported, and the
@@ -141,11 +141,7 @@ def picture(arena, s, b, frames=None, problems=None):
             y0, y1 = max(top - wy, 0), min(bot - wy + 1, 128)
             if y0 < y1:
                 x0, x1 = max(x, 0), min(x + 4, WW)
-                if hb == 0:                 # orange: the blades' dither, on x + y
-                    yy, xx = np.mgrid[y0:y1, x0:x1]
-                    pic[y0:y1, x0:x1] = np.where((xx + wx + yy + wy) & 1, 2, 3)
-                else:
-                    pic[y0:y1, x0:x1] = 1
+                pic[y0:y1, x0:x1] = 3 if hb == 0 else 1     # yellow, cyan
     wcx, wcy = wx >> 2, wy >> 3
     if s['state'] == ST_PLAY and not s['bdead'][b] and arena.head[b]:
         bx, top, bot = arena.head[b]

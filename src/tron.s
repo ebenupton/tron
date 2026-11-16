@@ -1,7 +1,7 @@
 ; ============================================================================
 ; TRON LIGHTCYCLE RUN -- two players, split screen, isometric, for the BBC Master 128
 ;
-;   the top window follows the orange bike (Z left, X right), the bottom the
+;   the top window follows the yellow bike (Z left, X right), the bottom the
 ;   cyan one (< left, > right; or the cursor keys).  25 Hz.
 ;
 ; Everything in play is a tile (tools/gen.py): 4 pixels by 16 lines, one byte
@@ -1275,7 +1275,7 @@ random:                             ; 16-bit xorshift
 ; bike X draws column bq of its segment and moves its head there
         .segment "CODE"
 grow:   stx gb
-        lda #2                      ; team: orange (2) for bike 0, cyan (1) for 1
+        lda #2                      ; team: yellow (2) for bike 0, cyan (1) for 1
         cpx #0
         beq :+
         lda #1
@@ -1525,26 +1525,16 @@ grow_cell:
         bcc @own
         cpy #16
         bcs @own
-        tya
-        and #1
-        tax
-        lda headcol,x
+        lda headcol
         sta (da),y
         dey
         bpl @ov
 @own:   ldx gb
         ldy tmp+3
+        lda headcol,x
 @hr:    cpy tmp+1
         bcc @hx
-        lda #$0F                    ; cyan's head cyan
-        cpx #0
-        bne :+
-        tya                         ; orange's orange: the blades' dither
-        and #1
-        tax
-        lda headcol,x
-        ldx #0
-:       sta (da),y
+        sta (da),y
         dey
         bpl @hr
 @hx:    lda tmp
@@ -1559,8 +1549,7 @@ grow_cell:
         sta hbxh,x
         jmp dirty_cell              ; cx = bx, tmp+2 = ty
 
-headcol: .byte $FA, $F5             ; orange: yellow on even pixels of even lines,
-                                    ; magenta on odd (as the blades: x + y)
+headcol: .byte $FF, $0F             ; yellow's head yellow, cyan's cyan
 
 ; the head's lines in tile row tmp+2 are tmp+1..tmp+3: into its world span (bike X)
 head_span:

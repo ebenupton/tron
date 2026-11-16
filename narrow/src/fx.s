@@ -200,16 +200,13 @@ fx_frag:
         and fxmask
         tax
         lda #$0F                    ; cyan
-        sta xlmc
-        sta xlmc+1
-        lda fxteam,x
-        cmp #2
+        ldy fxteam,x
+        cpy #2
         bne :+
-        lda #$FA                    ; orange: yellow on even pixels of even lines,
-        sta xlmc                    ; magenta on odd (the blades' dither)
-        lda #$F5
+        lda #$FF                    ; yellow
+:       sta xlmc
         sta xlmc+1
-:       txa
+        txa
         asl a
         tax
         lda fxox,x                  ; w16 = impact x - 4 wcx, tmp = impact y - 8 wcy
@@ -389,12 +386,7 @@ fx_frag:
         jmp @mid
 @last:  lda ldy_
         jsr @plot
-@next:  lda lcol                    ; the dither's other line
-        cmp #$0F
-        beq :+
-        eor #$0F
-        sta lcol
-:       inc lsy                     ; the next line: + 1, or + 633 into the next row
+@next:  inc lsy                     ; the next line: + 1, or + 633 into the next row
         lda lsy
         cmp #8
         bcs @row8
@@ -791,7 +783,7 @@ title_text:
         jmp text_list
 
 titles: .byte 24, 3, 2, "TRON LIGHTCYCLE RUN", 0
-        .byte 64, 2, 1, "ORANGE:  Z LEFT  X RIGHT", 0
+        .byte 64, 3, 1, "YELLOW:  Z LEFT  X RIGHT", 0
         .byte 88, 1, 1, "FIRST TO FIVE", 0
         .byte 152, 1, 1, "CYAN:  < LEFT  > RIGHT", 0
         .byte 184, 3, 1, "1  ONE PLAYER (VS COMPUTER)", 0
@@ -801,7 +793,7 @@ titles: .byte 24, 3, 2, "TRON LIGHTCYCLE RUN", 0
 ; (the Model B's, for its 40-character windows)
 titles_b:
         .byte 28, 3, 1, "TRON LIGHTCYCLE RUN", 0
-        .byte 64, 2, 1, "ORANGE: Z X", 0
+        .byte 64, 3, 1, "YELLOW: Z X", 0
         .byte 88, 1, 1, "FIRST TO FIVE", 0
         .byte 152, 1, 1, "CYAN: < >", 0
         .byte 184, 3, 1, "1 ONE PLAYER", 0
@@ -826,8 +818,8 @@ over_text:                          ; (once, across the middle of the screen)
         lda #<t_cwin
         ldy #>t_cwin
         jmp @t
-:       lda #<t_orange
-        ldy #>t_orange
+:       lda #<t_yellow
+        ldy #>t_yellow
         ldx score
         cpx #5
         bcc @t
@@ -846,7 +838,7 @@ over_text:                          ; (once, across the middle of the screen)
         lda #1
         sta txsc
         jsr draw_text
-        lda score                   ; the score: ORANGE n  CYAN n
+        lda score                   ; the score: YELLOW n  CYAN n
         ora #'0'
         sta sc_o
         lda score+1
@@ -875,11 +867,11 @@ over_text:                          ; (once, across the middle of the screen)
 :       rts
 t_press:  .byte "PRESS 1 OR 2 TO PLAY", 0
 
-t_orange: .byte 3, "  ORANGE SCORES ", 0
+t_yellow: .byte 3, "  YELLOW SCORES ", 0
 t_cyan:   .byte 1, "   CYAN SCORES  ", 0
 t_draw:   .byte 2, "  BOTH CRASHED  ", 0
-t_owin:   .byte 3, "ORANGE WINS!!!  ", 0
+t_owin:   .byte 3, "YELLOW WINS!!!  ", 0
 t_cwin:   .byte 1, " CYAN WINS!!!   ", 0
-t_score:  .byte "ORANGE "
+t_score:  .byte "YELLOW "
 sc_o:     .byte "0   CYAN "
 sc_c:     .byte "0", 0

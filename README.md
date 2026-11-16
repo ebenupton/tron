@@ -2,7 +2,7 @@
 
 A two-player, split-screen, isometric light-cycle game for the BBC Master 128, and
 (from the same disc and binary) the Model B with 32K of sideways RAM.  Each player
-has their own smoothly scrolling 320x128 MODE 1 window (orange on top, cyan
+has their own smoothly scrolling 320x128 MODE 1 window (yellow on top, cyan
 below).  The game runs at 25 Hz, and every graphic in play is a tile.  The bikes
 ride the floor's grid lines.  A Model B with only 16K of sideways RAM gets the
 earlier narrow build (160x128 windows, `narrow/`) from the same disc.
@@ -13,11 +13,11 @@ earlier narrow build (160x128 windows, `narrow/`) from the same disc.
 <td><img src="screenshots/countdown.png" width="400" alt="The countdown before a round"></td>
 </tr>
 <tr>
-<td><img src="screenshots/play1.png" width="400" alt="Mid-round: orange's window on top, cyan's below"></td>
+<td><img src="screenshots/play1.png" width="400" alt="Mid-round: yellow's window on top, cyan's below"></td>
 <td><img src="screenshots/play2.png" width="400" alt="Late in a round, the floor filling with trails"></td>
 </tr>
 <tr>
-<td><img src="screenshots/crash.png" width="400" alt="Orange crashes and explodes"></td>
+<td><img src="screenshots/crash.png" width="400" alt="Yellow crashes and explodes"></td>
 <td><img src="screenshots/score.png" width="400" alt="The score screen"></td>
 </tr>
 </table>
@@ -32,7 +32,7 @@ Boot `tron.ssd` (SHIFT+BREAK) on a Master 128, or on a Model B with two
 16K banks of sideways RAM, in any banks (the loader finds the two highest).  With
 one bank the loader runs the narrow build instead.
 
-| | Orange (top) | Cyan (bottom) |
+| | Yellow (top) | Cyan (bottom) |
 |---|---|---|
 | turn left | Z | < (comma) or cursor left |
 | turn right | X | > (full stop) or cursor right |
@@ -81,7 +81,7 @@ The tests take `MODEL=B1770` (or `B-DFS1.2`) to run a Model B instead of the Mas
 A tile is one MODE 1 byte (4 pixels) wide and 16 scanlines tall.  The memo's
 geometry repeats every 8 byte columns.  With the arena's origin at a row phase of
 7 (`Y0 & 15 = 7`; the memo leaves the phase open), each tile is touched by at most
-three blade segments, and each segment is absent, cyan or orange in that byte
+three blade segments, and each segment is absent, cyan or yellow in that byte
 column.  So each of the 8 column classes needs at most 27 tiles.
 
 The bikes ride the grid lines: the floor's magenta dots are on the lines i = k and
@@ -91,7 +91,7 @@ edge carry the same dots as the interior, which keeps the set to 247 tiles (3.9K
 Without the overhang it is 305, more than 8-bit ids allow.
 
 The generator renders every tile with the prototype's own rules: the 50% columns,
-the magenta/yellow dither, the per-pixel depth test, and the additive corners
+the per-pixel depth test, and the additive corners
 where the two orientations interleave.  Occlusion between blades is therefore
 already solved inside each tile.  One deviation from the prototype: a j-blade
 draws 8 columns, not 9.  The ninth, at the far end, belongs to the next segment's
@@ -102,7 +102,7 @@ A bike draws one byte column of trail per tick, a quarter of a cell.  For each
 cell that column touches, the map's tile id goes through a transition table:
 `TRANS[slot][colour][id]`, 1.5K, generated and checked unambiguous.  The 6502
 never composes trail pixels; it only looks up ids.  The bike's head is the newest
-column drawn solid: yellow for orange, cyan for cyan.  It uses four dynamic tiles,
+column drawn solid, in its own colour.  It uses four dynamic tiles,
 which are copied from the static tile and overwritten each tick.  When both heads
 fall in the same tile, the second bike's tile carries both heads, and the first
 bike's saved tile takes the second's trail column.
@@ -330,8 +330,7 @@ and out from the impact.
   byte count and its two edge masks.
 * **Drawing:** each tick, in each window, every fragment the window shows is put
   back to the floor by redrawing its box of characters from the map.  Then this
-  tick's fragments are drawn with the memo's replace rule: cyan, or the blades'
-  magenta/yellow dither for orange.  A fragment is drawn only if it lies wholly in
+  tick's fragments are drawn with the memo's replace rule: cyan or yellow.  A fragment is drawn only if it lies wholly in
   the window below its top character row, so the composed row (a copy of that row)
   never needs refreshing during a crash.
 * **Timing:** an update costs at most about 14K cycles (111 lines).  It is done in
@@ -361,7 +360,7 @@ fragment shows.
 **The model:** from that alone, the Python model rebuilds the arena with the
 prototype's rules from `tools/geom.py`. It covers:
 * the dots;
-* each blade's lit columns, with the depth test and dither;
+* each blade's lit columns, with the depth test;
 * the solid heads;
 * the cursor over each window's own head;
 * the explosion's fragments.

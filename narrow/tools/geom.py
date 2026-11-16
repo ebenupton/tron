@@ -57,10 +57,8 @@ def grid_points():
     return pts
 
 def blade_colour(team, x, y):
-    """team 1 cyan, 2 orange (magenta/yellow dither keyed on x + y)."""
-    if team == 1:
-        return 1
-    return 2 if (x + y) & 1 else 3
+    """team 1 cyan, 2 yellow."""
+    return 1 if team == 1 else 3
 
 EDGES = [(i, j, di, dj) for i in range(N) for j in range(N)
          for (di, dj) in ((1, 0), (0, 1)) if i + di < N and j + dj < N]
